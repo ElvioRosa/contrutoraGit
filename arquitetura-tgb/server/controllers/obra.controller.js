@@ -1,8 +1,9 @@
 const Obra = require('../models/obra.model');
+const Parse = require('json-parse');
 
 exports.list = function (req, res) {
     Obra.find({}, function(err, obras) {
-        res.send(obras);  
+        res.send(dateFormat(obras));  
     });
 };
 
@@ -12,8 +13,8 @@ exports.new = function (req, res) {
             name: req.body.name,
             type: req.body.type,
             status: req.body.status,
-            dateStart: Date.parse(req.body.dateStart),
-            dateEnd: Date.parse(req.body.dateEnd)
+            dateStart: req.body.dateStart,
+            dateEnd: req.body.dateEnd
         }
     );
 
@@ -28,7 +29,7 @@ exports.new = function (req, res) {
 exports.view = function (req, res) {
     obra.findById(req.params.id, function (err, obra) {
         if (err) return next(err);
-        res.send(obra);
+        res.send(dateFormat(obra));
     })
 };
 
@@ -45,3 +46,28 @@ exports.delete = function (req, res) {
         res.send('Deleted successfully!');
     })
 };
+
+function dateFormat(array) {
+    let json;
+    let ret = [];
+
+    if(array.length){
+        for(let i = 0; i < array.length; i++){
+            json = JSON.stringify(array[i]);
+            obj = Parse("erro json",json);
+            
+            if(obj.dateStart){
+                obj.dateStart = obj.dateStart.substring(0, 10);
+            }
+            if(obj.dateEnd){
+                obj.dateEnd = obj.dateEnd.substring(0, 10);
+            }
+
+            ret[i] = obj;
+        }
+    }else{
+        ret = array;
+    }
+
+    return ret;
+}

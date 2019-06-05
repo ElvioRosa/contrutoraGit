@@ -1,8 +1,9 @@
 const Projeto = require('../models/projeto.model');
+const Parse = require('json-parse');
 
 exports.list = function (req, res) {
     Projeto.find({}, function(err, projetos) {
-        res.send(projetos);  
+        res.send(dateFormat(projetos));  
     });
 };
 
@@ -28,7 +29,7 @@ exports.new = function (req, res) {
 exports.view = function (req, res) {
     Projeto.findById(req.params.id, function (err, projeto) {
         if (err) return next(err);
-        res.send(projeto);
+        res.send(dateFormat(projeto));
     })
 };
 
@@ -45,3 +46,29 @@ exports.delete = function (req, res) {
         res.send('Deleted successfully!');
     })
 };
+
+
+function dateFormat(array) {
+    let json;
+    let ret = [];
+
+    if(array.length){
+        for(let i = 0; i < array.length; i++){
+            json = JSON.stringify(array[i]);
+            obj = Parse("erro json",json);
+            
+            if(obj.dateStart){
+                obj.dateStart = obj.dateStart.substring(0, 10);
+            }
+            if(obj.dateEnd){
+                obj.dateEnd = obj.dateEnd.substring(0, 10);
+            }
+
+            ret[i] = obj;
+        }
+    }else{
+        ret = array;
+    }
+
+    return ret;
+}

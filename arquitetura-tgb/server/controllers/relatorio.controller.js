@@ -1,5 +1,5 @@
 const Projeto = require('../models/projeto.model');
-const Parse = require('json-parse')
+const Parse = require('json-parse');
 
 exports.list = function (req, res) {
     Projeto.find({}, function(err, projeto) {
@@ -33,7 +33,6 @@ exports.list = function (req, res) {
     
     for(let i = 0; i < result1.length; i++){
         let obj = { name: result1[i], qtd: result2[i] };
-		//let myJSON = JSON.stringify(obj);
 		ret[i] = obj;
     }
 

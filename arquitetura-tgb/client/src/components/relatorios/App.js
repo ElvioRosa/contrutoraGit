@@ -1,27 +1,27 @@
-import React, { Fragment, PureComponent } from 'react';
+import React, { Fragment, Component } from 'react';
 import {
   ComposedChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
   Legend,
 } from 'recharts';
 
 
-class Relatorios extends PureComponent {
+class Relatorios extends Component {
     state = {
         characters: [],
         editing : "1",
         currentCharacter : {}
     }
 
-  handleSubmit() {
-    const url = "http://localhost:1234/relatorios/";
+    componentDidMount() {
+      const url = "http://localhost:1234/relatorios/";
 
-    fetch(url)
-    .then(result => result.json())
-    .then(result => {
-        this.setState({
-            characters: result                
-        })
-    });
+      fetch(url)
+      .then(result => result.json())
+      .then(result => {
+          this.setState({
+              characters: result                
+          })
+      });
   }
 
     render() {

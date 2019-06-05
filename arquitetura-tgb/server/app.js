@@ -28,9 +28,11 @@ app.use(function (req, res, next) {
 
 const projeto = require('./routes/projeto.route');
 const obra = require('./routes/obra.route');
+const relatorio = require('./routes/ralatorio.route');
 
 app.use('/projetos', projeto);
 app.use('/obras', obra);
+app.use('/relatorios', relatorio);
 
 let port = 1234;
 

@@ -1,5 +1,6 @@
 import React, { Fragment, Component } from 'react';
 import Table from './Table';
+import FormSelect from './Form-Select';
 import {
   ComposedChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
   Legend,
@@ -9,7 +10,7 @@ import {
 class Relatorios extends Component {
     state = {
         characters: [],
-        editing : "1",
+        editing : "0",
         currentCharacter : {}
     }
 
@@ -25,6 +26,12 @@ class Relatorios extends Component {
       });
   }
 
+  handleFormAddSubmit = initialState => { 
+    this.setState({
+      editing : "1"               
+  })
+  }
+
     render() {
 
       const { characters } = this.state
@@ -33,42 +40,44 @@ class Relatorios extends Component {
 
         if(this.state.editing === "1") {
           view =  <Fragment>
-                      <h2>Status projetos</h2>
-                      <ComposedChart
-                        width={500}
-                        height={400}
-                        data={characters}
-                        margin={{
-                        top: 20, right: 20, bottom: 20, left: 20,
-                        }}
-                      >
-                      <CartesianGrid stroke="#f5f5f5" />
-                      <XAxis dataKey="name" />
-                      <YAxis />
-                      <Tooltip />
-                      <Legend />
-                      <Bar dataKey="qtd" barSize={20} fill="#413ea0" />
-                      </ComposedChart>
+                    <div className="flex-large">
+                      <h2>Status dos projetos</h2>
+                        <ComposedChart
+                          width={500}
+                          height={400}
+                          data={characters}
+                          margin={{
+                          top: 20, right: 20, bottom: 20, left: 20,
+                          }}
+                        >
+                        <CartesianGrid stroke="#f5f5f5" />
+                        <XAxis dataKey="name" />
+                        <YAxis />
+                        <Tooltip />
+                        <Legend />
+                        <Bar dataKey="qtd" barSize={20} fill="#413ea0" />
+                        </ComposedChart>
+                      </div>
+                    <div className="flex-large">
+                      <Table
+                        characterData={characters}
+                      />
+                    </div>
                   </Fragment>;
-
         }else{
           view =  <Fragment>
-                    <h2>Select Report</h2>
+                    <div className="flex-large">
+                      <h2>Select Report</h2>
+                      <FormSelect handleSubmit={this.handleFormAddSubmit} />
+                    </div>
+                    <div className="flex-large">
+                    </div>
                   </Fragment>; 
         }                    
-
         return (
             <div className="container">
               <div className="flex-row">
-				        <div className="flex-large">
                   {view}
-                </div>
-                <div className="flex-large">
-                  <Table
-                   characterData={characters}
-
-                  />
-                </div>
               </div>                                    
             </div>
         );

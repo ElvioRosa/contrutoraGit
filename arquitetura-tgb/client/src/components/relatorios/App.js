@@ -1,4 +1,5 @@
 import React, { Fragment, Component } from 'react';
+import Table from './Table';
 import {
   ComposedChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
   Legend,
@@ -26,7 +27,7 @@ class Relatorios extends Component {
 
     render() {
 
-        const characters = this.state;
+      const { characters } = this.state
         
         let view;
 
@@ -61,6 +62,12 @@ class Relatorios extends Component {
               <div className="flex-row">
 				        <div className="flex-large">
                   {view}
+                </div>
+                <div className="flex-large">
+                  <Table
+                   characterData={characters}
+
+                  />
                 </div>
               </div>                                    
             </div>

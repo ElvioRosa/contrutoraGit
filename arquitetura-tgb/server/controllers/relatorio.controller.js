@@ -19,12 +19,12 @@ exports.list = function (req, res) {
         json = JSON.stringify(array[i]);
         obj = Parse("erro json",json);
         
-        if(result1.indexOf(obj.type) >= 0){
-            let pos = result1.indexOf(obj.type);
+        if(result1.indexOf(obj.status) >= 0){
+            let pos = result1.indexOf(obj.status);
             result2[pos] = result2[pos]+1;
 
         }else{
-            result1[result1.length] = obj.type;
+            result1[result1.length] = obj.status;
             result2[result2.length] = 1;
         }
         
